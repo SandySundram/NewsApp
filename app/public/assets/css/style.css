@@ -1,0 +1,111 @@
+body, main {
+    height: auto;
+    width: 100%;
+    font-family: 'Kosugi Maru', sans-serif;
+}
+#index-body-results,#index-main-results{
+    height: 555px;
+}
+
+/* -----------------------------------------Footer--------------------------------- */
+
+#footer {
+    width: 100%;
+    height: 30px;
+    bottom: 0;
+    background-color: rgb(175, 175, 175);
+    position: fixed;
+}
+#copyright{
+    margin-top: 5px;
+}
+
+/* -----------------------------------------Header--------------------------------- */
+
+#header{
+    width: 100%;
+    height: 48px;
+    padding-top: 10px;
+    /* top: 0; */
+    background-color: rgba(65, 66, 88, 0.9);
+    font-size: 20px;
+    position: fixed;
+    text-align: center;
+    /* margin-bottom: 20px; */
+    box-shadow: 0 5px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}
+
+#saveButton,#homeLink,#scrapeButton{
+    float:left;
+}
+#homeLink{
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-top: -1px;
+    font-size: 30px;
+    color: white;
+}
+#saveButton,#scrapeButton{
+    margin-right: 20px;
+    margin-left: 20px;
+    
+}
+#saveButton button,#scrapeButton button{
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    outline: none;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0,0.17);
+    transition: all 0.3s ease 0s;
+}
+
+#saveButton button:hover, #scrapeButton button:hover {
+    /* background-color: #2EE59D; */
+    box-shadow: 0px 15px 20px rgba(0, 0, 0,0.17);
+    /* color: #fff; */
+    transform: translateY(-3px);
+  }
+/* #saveButton button{
+    color:#b86574
+} */
+#scrapeButton button{
+    background-color:#b86574
+}
+
+/* -----------------------------------------Page Title--------------------------------- */
+
+#pageTitle{
+    width: 100%;
+    height: 150px;
+    background-image: url("../images/newspaper-editorials.jpg");    
+    color: white;
+    font-size: 30px;
+    font-weight: 600;
+    background-size:  cover;
+}
+
+/* -----------------------------------------Article Container--------------------------------- */
+#articleContainer{
+    background-color: black;
+    width: 100%;
+    height: auto;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+#noData{
+    width: 70%;
+    height: 30px;
+    margin: auto;
+    background-color: brown;
+    text-align: center;
+}
+.articleDiv{
+    background-color: azure;
+    width: 80%;
+    height: auto;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" id="index-html">
+<head>
+	<% include ../partials/head %>
+</head>
+<body id="index-body">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+	
+	<main id="index-main">
+        <div id="pageTitle"></div>
+        <div id="articleContainer">
+            <% if (typeof found == 'undefined' || found == [] || found == null){ %>
+                <div id="noData">
+                    Sorry!, we have no articles to display at this moment. Please scrape new data.
+                </div>
+           <% } else {
+               for(let i = 0;i<found.length;i++){ %>
+                <div class="articleDiv">
+                    <h1 class="articleHeader">
+                        <a target="_blank" href="<%= found[i].link %>"><%= found[i].title %></a>
+                    </h1>
+                    <p class="articlePara"><%= found[i].para %></p>
+                </div>
+               <% }  
+            } %>
+        </div>
+	</main>
+	<!-- https://tayloraanenson.github.io/star-wars-rpg/ -->
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+</body>
+</html>

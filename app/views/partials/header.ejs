@@ -1,0 +1,17 @@
+<!-- <div id="header"><a id="homeLink" href= "/"><% if(typeof userName == 'undefined'){ %>
+                                                        <% } else { %>
+                                                            Home
+                                                        <% } %>
+                </a><div id="pageTitle" <% if(typeof userName == 'undefined'){ %>
+                                            style="width:100%;"
+                                        <% } %>>FRIEND FINDER</div></div> -->
+
+<div id="header">
+    <a id="homeLink" href= "/">MONGO SCRAPER</a>
+    <form id="saveButton" method="GET" action="/saved">  
+        <button>Saved Articles</button>
+    </form>
+    <form id="scrapeButton" method="GET" action="/scrape">
+        <button>Scrape New Articles</button>
+    </form>
+</div>
