@@ -26,13 +26,11 @@ router.get('/',function(req,res){
         }
         // If there are no errors, send the data to page and render it
         else {
-            console.log("Came in here");
+            console.log("root route - Came in here");
             console.log(found);
             res.render('pages/index',{found:found});
         }
-    });
-    
-    
+    }); 
 });
 
 // Scrape data from one site and place it into the mongodb db
@@ -78,11 +76,23 @@ router.get("/scrape", function(req, res) {
         }
       });
     });
-  
-    // Send a "Scrape Complete" message to the browser
-    
-    
-  });
+});
+
+router.get('/delete',function(req,res){
+
+    db.news.remove({},function(error, found) {
+        // Throw any errors to the console
+        if (error) {
+          console.log(error);
+        }
+        // If there are no errors, send the data to page and render it
+        else {
+            console.log("Delete route - Came in here");
+            console.log(found);
+            res.redirect('/');
+        }
+    }); 
+});
 
 
 

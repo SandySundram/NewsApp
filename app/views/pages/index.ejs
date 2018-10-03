@@ -13,10 +13,11 @@
         <div id="pageTitle"></div>
         <div id="articleContainer">
             <% if (typeof found == 'undefined' || found == [] || found == null){ %>
+                This is found = <%= found %>
                 <div id="noData">
                     Sorry!, we have no articles to display at this moment. Please scrape new data.
                 </div>
-           <% } else {
+            <% } else {
                for(let i = 0;i<found.length;i++){ %>
                 <div class="articleDiv">
                     <h1 class="articleHeader">
@@ -28,7 +29,6 @@
             } %>
         </div>
 	</main>
-	<!-- https://tayloraanenson.github.io/star-wars-rpg/ -->
 	<footer>
 		<% include ../partials/footer %>
 	</footer>

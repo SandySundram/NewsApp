@@ -38,6 +38,9 @@ body, main {
 #saveButton,#homeLink,#scrapeButton{
     float:left;
 }
+#deleteButton{
+    float:right;
+}
 #homeLink{
     margin-left: 10px;
     margin-right: 20px;
@@ -45,12 +48,12 @@ body, main {
     font-size: 30px;
     color: white;
 }
-#saveButton,#scrapeButton{
+#saveButton,#scrapeButton,#deleteButton{
     margin-right: 20px;
     margin-left: 20px;
     
 }
-#saveButton button,#scrapeButton button{
+#saveButton button,#scrapeButton button, #deleteButton button{
     border-radius: 5px;
     border: none;
     text-decoration: none;
@@ -61,7 +64,7 @@ body, main {
     transition: all 0.3s ease 0s;
 }
 
-#saveButton button:hover, #scrapeButton button:hover {
+#saveButton button:hover, #scrapeButton button:hover, #deleteButton button:hover {
     /* background-color: #2EE59D; */
     box-shadow: 0px 15px 20px rgba(0, 0, 0,0.17);
     /* color: #fff; */
@@ -71,7 +74,10 @@ body, main {
     color:#b86574
 } */
 #scrapeButton button{
-    background-color:#b86574
+    background-color:#b86574;
+}
+#deleteButton button{
+    background-color:#5a8bc7;
 }
 
 /* -----------------------------------------Page Title--------------------------------- */
@@ -88,7 +94,7 @@ body, main {
 
 /* -----------------------------------------Article Container--------------------------------- */
 #articleContainer{
-    background-color: black;
+    background-color: #c7aa99;
     width: 100%;
     height: auto;
     padding-top: 40px;
@@ -106,6 +112,9 @@ body, main {
     width: 80%;
     height: auto;
     margin: auto;
-    text-align: center;
+    /* text-align: center; */
     margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0,0.17);
+    padding: 10px;
 }
