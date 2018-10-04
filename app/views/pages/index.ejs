@@ -12,8 +12,7 @@
 	<main id="index-main">
         <div id="pageTitle"></div>
         <div id="articleContainer">
-            <% if (typeof found == 'undefined' || found == [] || found == null){ %>
-                This is found = <%= found %>
+            <% if (typeof found == 'undefined'){ %>
                 <div id="noData">
                     Sorry!, we have no articles to display at this moment. Please scrape new data.
                 </div>
@@ -23,6 +22,7 @@
                     <h1 class="articleHeader">
                         <a target="_blank" href="<%= found[i].link %>"><%= found[i].title %></a>
                     </h1>
+                    <div data-id="<%= found[i]._id %>" class="articleSave">Save</div>
                     <p class="articlePara"><%= found[i].para %></p>
                 </div>
                <% }  

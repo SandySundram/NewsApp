@@ -1,11 +1,7 @@
-$("#pic-upload").change(function(){
-    console.log(this.files);
-    var file = new FileReader();
+$(document).on('click','.articleSave',function(){
     
-    console.log(file.onload);
-    file.onload = function(evt){
-        console.log(evt.target);
-        $("#placeholder-pic").attr('src',evt.target.result);
-    };
-    file.readAsDataURL(this.files[0]);
+    let button = $(this);
+    alert("ID: "+button.attr('data-id'));
+
+
 })

@@ -106,6 +106,9 @@ body, main {
     margin: auto;
     background-color: brown;
     text-align: center;
+    margin-top: -20px;
+    color: white;
+    padding-top: 5px;
 }
 .articleDiv{
     background-color: azure;
@@ -117,4 +120,25 @@ body, main {
     border-radius: 5px;
     box-shadow: 0px 8px 15px rgba(0, 0, 0,0.17);
     padding: 10px;
+}
+
+.articleHeader{
+    float: left;
+    margin-bottom: 5px;
+}
+.articleSave{
+    float: right;
+    margin-top: -5px;
+    color: brown;
+    border: solid black 0.5px;
+    border-radius: 4px;
+    padding: 1px;
+}
+.articleSave:hover{
+    cursor: pointer;
+    background-color: brown;
+    color: white;
+}
+.articlePara{
+    clear: both;
 }

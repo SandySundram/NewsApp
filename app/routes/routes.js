@@ -28,7 +28,13 @@ router.get('/',function(req,res){
         else {
             console.log("root route - Came in here");
             console.log(found);
-            res.render('pages/index',{found:found});
+            if (found.length == 0){
+                console.log("empty found");
+                res.render('pages/index',found);
+            }else{
+                console.log(found, typeof found);
+                res.render('pages/index',{found:found});
+            } 
         }
     }); 
 });
@@ -80,7 +86,7 @@ router.get("/scrape", function(req, res) {
 
 router.get('/delete',function(req,res){
 
-    db.news.remove({},function(error, found) {
+    db.news.drop(function(error, found) {
         // Throw any errors to the console
         if (error) {
           console.log(error);
@@ -93,7 +99,5 @@ router.get('/delete',function(req,res){
         }
     }); 
 });
-
-
 
 module.exports = router;
