@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" id="index-html">
+<head>
+	<% include ../partials/head %>
+</head>
+<body id="index-body-results">
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+	
+	<main id="index-main-results">
+		<div id="pageTitle"></div>
+		<div id="articleContainer">
+			<% if (typeof found == 'undefined'){ %>
+				<div id="noData">
+					Sorry!, we have no articles to display at this moment. Please go to the home page and scrape new data.
+				</div>
+			<% } else {
+				for(let i = 0;i<found.length;i++){ %>
+				<div class="articleDiv">
+					<h1 class="articleHeader">
+						<a target="_blank" href="<%= found[i].link %>"><%= found[i].title %></a>
+					</h1>
+					<% if (found[i].Saved == true){ %>
+						<div data-id="<%= found[i]._id %>" class="articleComment">Read Comments</div>
+						<div data-id="<%= found[i]._id %>" class="articleRemove">Delete</div>
+					<% } %>
+					
+					<p class="articlePara"><%= found[i].para %></p>
+				</div>
+				<% }  
+			} %>
+		</div>
+	</main>
+	<footer>
+		<% include ../partials/footer %>
+		<script src="assets/javascript/saved.js"></script>
+	</footer>
+
+</body>
+<script type="text/javascript">
+	
+</script>
+</html>

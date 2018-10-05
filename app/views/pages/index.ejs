@@ -22,7 +22,12 @@
                     <h1 class="articleHeader">
                         <a target="_blank" href="<%= found[i].link %>"><%= found[i].title %></a>
                     </h1>
-                    <div data-id="<%= found[i]._id %>" class="articleSave">Save</div>
+                    <% if (found[i].Saved == true){ %>
+                        <div data-id="<%= found[i]._id %>" class="articleSaved">Saved</div>
+                    <% }else{ %>
+                        <div data-id="<%= found[i]._id %>" class="articleSave">Save</div>
+                    <% } %>
+                    
                     <p class="articlePara"><%= found[i].para %></p>
                 </div>
                <% }  
@@ -30,7 +35,8 @@
         </div>
 	</main>
 	<footer>
-		<% include ../partials/footer %>
+        <% include ../partials/footer %>
+        <script src="assets/javascript/index.js"></script>
 	</footer>
 
 </body>

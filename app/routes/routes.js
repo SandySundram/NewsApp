@@ -18,7 +18,6 @@ db.on("error", function(error) {
 
 
 router.get('/',function(req,res){
-
     db.news.find({}, function(error, found) {
         // Throw any errors to the console
         if (error) {
@@ -26,13 +25,13 @@ router.get('/',function(req,res){
         }
         // If there are no errors, send the data to page and render it
         else {
-            console.log("root route - Came in here");
-            console.log(found);
+            console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
+            // console.log(found);
             if (found.length == 0){
                 console.log("empty found");
                 res.render('pages/index',found);
             }else{
-                console.log(found, typeof found);
+                console.log(found);
                 res.render('pages/index',{found:found});
             } 
         }
@@ -62,7 +61,9 @@ router.get("/scrape", function(req, res) {
         if (title && link) {
             array.push({title: title,
                 link: "https://www.nytimes.com"+link,
-            para:para});
+                para:para,
+                Saved: false
+            });
             
             console.log(i+" pushed to array");
         }
@@ -93,11 +94,93 @@ router.get('/delete',function(req,res){
         }
         // If there are no errors, send the data to page and render it
         else {
-            console.log("Delete route - Came in here");
+            console.log("Delete route - Came in here--------------------------------------------------------------------------------------------------------------------------------");
             console.log(found);
             res.redirect('/');
         }
     }); 
+});
+
+router.get('/save/:id', function(req,res){
+    db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"Saved":true}}, 
+        function(error, found){
+            if (error) {
+                console.log(error);
+            }
+            // If there are no errors, send the data to page and render it
+            else {
+
+                db.news.find({"_id": mongojs.ObjectID(req.params.id)}, function(error, found) {
+                    // Throw any errors to the console
+                    if (error) {
+                      console.log(error);
+                    }
+                    // If there are no errors, send the data to page and render it
+                    else {
+                        console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
+                        // console.log(found[0].Saved);
+                        if (found[0].Saved == true){
+                            res.redirect('/');
+                        }else{
+                            console.log("Document not yet updated");
+                        } 
+                    }
+                });
+                
+            }
+
+    });
+});
+
+router.get('/saved', function(req,res){
+    
+    db.news.find({"Saved":true}, function(error,found){
+        if (error) {
+            console.log(error);
+        }
+        // If there are no errors, send the data to page and render it
+        else {
+            console.log("saved route - Came in here------------------------------------------------------------------------------------------------------------------------------");
+            // console.log(found[0]);
+            if (found.length == 0){
+                res.render('pages/saved', found);
+            }else{
+                res.render('pages/saved', {found: found});
+                // console.log("Document not yet updated");
+            } 
+        }
+    });
+});
+
+router.get('/remove-save/:id', function(req,res){
+    db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"Saved":false}}, 
+        function(error, found){
+            if (error) {
+                console.log(error);
+            }
+            // If there are no errors, send the data to page and render it
+            else {
+
+                db.news.find({"_id": mongojs.ObjectID(req.params.id)}, function(error, found) {
+                    // Throw any errors to the console
+                    if (error) {
+                      console.log(error);
+                    }
+                    // If there are no errors, send the data to page and render it
+                    else {
+                        console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
+                        // console.log(found[0].Saved);
+                        if (found[0].Saved == false){
+                            res.redirect('/saved');
+                        }else{
+                            console.log("Document not yet updated");
+                        } 
+                    }
+                });
+                
+            }
+
+    });
 });
 
 module.exports = router;
