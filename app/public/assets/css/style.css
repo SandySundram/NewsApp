@@ -47,6 +47,7 @@ body, main {
     margin-top: -1px;
     font-size: 30px;
     color: white;
+    text-decoration: none;
 }
 #saveButton,#scrapeButton,#deleteButton{
     margin-right: 20px;

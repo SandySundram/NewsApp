@@ -13,11 +13,11 @@ $(document).on('click','.articleRemove',function(){
         // On successful call
         success: function(response) {
             // console.log('DONE', response);
-            // console.log(button.parent());
+            console.log($('.articleDiv')[0]);
           // Remove the p-tag from the DOM
             button.parent().hide();
           // Clear the note and title inputs
-            if($('.articleDiv').length == 1){
+            if($('.articleDiv:hidden').length == $('.articleDiv').length){
                 console.log('render message');
                 let message = $('<div>').attr('id','noData').text('Sorry!, we have no articles to display at this moment. Please go to the home page and scrape new data.');
                 $('#articleContainer').append(message);
