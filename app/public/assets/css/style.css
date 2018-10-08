@@ -203,6 +203,9 @@ body, main {
     margin-bottom: 2.5px;
     overflow: auto;
 }
+::-webkit-scrollbar {
+    display: none;
+}
 .comment-entry{
     height: auto;
     /* background-color: red; */

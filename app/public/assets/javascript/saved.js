@@ -31,6 +31,7 @@ $(document).on('click','.articleRemove',function(){
 $(document).on('click','.commentSubmit',function(){
 
     let text = $(this).prev().val();
+    let comment = $(this).prev();
     let id = $(this).attr("data-id");
     let comments = $(this).prev().prev().prev();
 
@@ -43,6 +44,7 @@ $(document).on('click','.commentSubmit',function(){
         // On successful call
         success: function(response) {
 
+            $(comment).val("");
             displayAllComments(comments,id);
 
         }
@@ -52,7 +54,7 @@ $(document).on('click','.commentSubmit',function(){
 $(document).on('click','.articleCommentExpand',function(){
 
     $(this).next().next().next().show();
-    $(this).attr('class', 'articleCommentCollapse');
+    $(this).attr('class', 'articleCommentCollapse').text('Collapse Comments');
     let comments = $(this).next().next().next().children()[0];
     let button = $(this).next().next().next().children()[3];
     let id = $(button).attr('data-id');
@@ -63,7 +65,7 @@ $(document).on('click','.articleCommentExpand',function(){
 $(document).on('click','.articleCommentCollapse',function(){
 
     $(this).next().next().next().hide();
-    $(this).attr('class', 'articleCommentExpand');
+    $(this).attr('class', 'articleCommentExpand').text('Read Comments');
 })
 
 function displayAllComments(comments,id){
