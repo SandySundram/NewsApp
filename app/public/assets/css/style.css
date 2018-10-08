@@ -157,7 +157,7 @@ body, main {
 
 /* -----------------------------------------Save Page Article Container--------------------------------- */
 
-.articleComment{
+.articleCommentExpand, .articleCommentCollapse{
     float: right;
     margin-top: -5px;
     color: brown;
@@ -165,7 +165,7 @@ body, main {
     border-radius: 4px;
     padding: 1px;
 }
-.articleComment:hover{
+.articleCommentExpand:hover, .articleCommentCollapse:hover{
     cursor: pointer;
     background-color: brown;
     color: white;
@@ -183,4 +183,54 @@ body, main {
     cursor: pointer;
     background-color: brown;
     color: white;
+}
+
+/* -----------------------------------------Save Page Comment Container--------------------------------- */
+.commentDiv{
+    width: 98%;
+    height: 400px;
+    border: solid black 2px;
+    margin: auto;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.comments{
+    width: 99%;
+    height: 282px;
+    border: solid black 1px;
+    margin: 5px;
+    border-radius: 5px;
+    margin-bottom: 2.5px;
+    overflow: auto;
+}
+.comment-entry{
+    height: auto;
+    /* background-color: red; */
+    padding: 10px;
+}
+.writeComment{
+    width: 90%;
+    height: 95px;
+    border: solid black 1px;
+    margin: 5px;
+    border-radius: 5px;
+    float: left;
+    text-decoration: none;
+    outline: none;  
+}
+.commentSubmit{
+    background-color: #43a9ff;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    outline: none;
+    height: 94px;
+    width: 8%;
+    cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0,0.17);
+    transition: all 0.3s ease 0s;
+    margin: 4px;
+}h
+#hiddenMessageInput{
+    display: none;
 }

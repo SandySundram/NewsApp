@@ -62,7 +62,8 @@ router.get("/scrape", function(req, res) {
             array.push({title: title,
                 link: "https://www.nytimes.com"+link,
                 para:para,
-                Saved: false
+                Saved: false,
+                comments:[]
             });
             
             console.log(i+" pushed to array");
@@ -182,5 +183,78 @@ router.get('/remove-save/:id', function(req,res){
 
     });
 });
+
+router.post('/save-comment/:id', function(req,res){
+    console.log(req.params.id, req.body.comment);
+
+    db.news.find({"_id": mongojs.ObjectID(req.params.id)}, function(error,found){
+        if (error) {
+            console.log(error);
+        }else{
+            // console.log(res);
+            let commentArray = found[0].comments;
+            commentArray.push(req.body.comment);
+
+            db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"comments":commentArray}}, 
+            function(error, found){
+                if (error) {
+                    console.log(error);
+                }
+                // If there are no errors, send the data to page and render it
+                else {
+
+                    console.log("Comment Added");
+                    res.redirect('/saved');
+
+                    // db.news.find({"_id": mongojs.ObjectID(req.params.id)}, function(error, found) {
+                    //     // Throw any errors to the console
+                    //     if (error) {
+                    //     console.log(error);
+                    //     }
+                    //     // If there are no errors, send the data to page and render it
+                    //     else {
+                    //         console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
+                    //         // console.log(found[0].Saved);
+                    //         if (found[0].Saved == false){
+                    //             res.redirect('/saved');
+                    //         }else{
+                    //             console.log("Document not yet updated");
+                    //         } 
+                    //     }
+                    // });
+                    
+                }
+
+            });
+        }
+        
+    })
+})
+
+router.get("/all-comments/:id", function(req, res) {
+    // When searching by an id, the id needs to be passed in
+    // as (mongojs.ObjectId(IdYouWantToFind))
+  
+    // Find just one result in the notes collection
+    db.news.findOne(
+      {
+        // Using the id in the url
+        _id: mongojs.ObjectId(req.params.id)
+      },
+      function(error, found) {
+        // log any errors
+        if (error) {
+            console.log(error);
+            res.send(error);
+        }
+        else {
+            // Otherwise, send the note to the browser
+            // This will fire off the success function of the ajax request
+            //   console.log(found);
+            res.json(found);
+        }
+      }
+    );
+  });
 
 module.exports = router;

@@ -23,11 +23,17 @@
 						<a target="_blank" href="<%= found[i].link %>"><%= found[i].title %></a>
 					</h1>
 					<% if (found[i].Saved == true){ %>
-						<div data-id="<%= found[i]._id %>" class="articleComment">Read Comments</div>
+						<div data-id="<%= found[i]._id %>" class="articleCommentExpand">Read Comments</div>
 						<div data-id="<%= found[i]._id %>" class="articleRemove">Delete</div>
 					<% } %>
 					
 					<p class="articlePara"><%= found[i].para %></p>
+					<div class="commentDiv">
+						<div class="comments"></div>
+						<form action="/save-comment" method="POST"></form>
+						<textarea class="writeComment"></textarea>
+						<button class="commentSubmit" data-id="<%= found[i]._id %>">Post Message</button>
+					</div>
 				</div>
 				<% }  
 			} %>
