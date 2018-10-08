@@ -154,7 +154,7 @@ router.get('/saved', function(req,res){
 });
 
 router.get('/remove-save/:id', function(req,res){
-    db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"Saved":false}}, 
+    db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"Saved":false, "comments":[]}}, 
         function(error, found){
             if (error) {
                 console.log(error);
