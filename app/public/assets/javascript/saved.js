@@ -1,30 +1,90 @@
+console.log('saved js file');
 $('#saveButton').hide();
 $('#deleteButton').hide();
 $('#scrapeButton').hide();
+$(".commentDiv").hide();
 
 $(document).on('click','.articleRemove',function(){
-    // alert("clicked");
+
     let button = $(this);
-    // alert("ID: "+button.attr('data-id'));
+
     $.ajax({
         type: "GET",
         url: "/remove-save/" + button.attr("data-id"),
     
         // On successful call
         success: function(response) {
-            // console.log('DONE', response);
-            console.log($('.articleDiv')[0]);
-          // Remove the p-tag from the DOM
+
             button.parent().hide();
-          // Clear the note and title inputs
+
             if($('.articleDiv:hidden').length == $('.articleDiv').length){
-                console.log('render message');
+
                 let message = $('<div>').attr('id','noData').text('Sorry!, we have no articles to display at this moment. Please go to the home page and scrape new data.');
                 $('#articleContainer').append(message);
-                // $('#noData').show();
-            }else{
-                console.log('do nothing');
+
             }
         }
     });
 })
+
+
+$(document).on('click','.commentSubmit',function(){
+
+    let text = $(this).prev().val();
+    let id = $(this).attr("data-id");
+    let comments = $(this).prev().prev().prev();
+
+    $.ajax({
+        type: "POST",
+        url: "/save-comment/" + $(this).attr("data-id"),
+        data: {
+            comment: text
+        },
+        // On successful call
+        success: function(response) {
+
+            displayAllComments(comments,id);
+
+        }
+    });
+})
+
+$(document).on('click','.articleCommentExpand',function(){
+
+    $(this).next().next().next().show();
+    $(this).attr('class', 'articleCommentCollapse');
+    let comments = $(this).next().next().next().children()[0];
+    let button = $(this).next().next().next().children()[3];
+    let id = $(button).attr('data-id');
+
+    displayAllComments(comments,id);
+})
+
+$(document).on('click','.articleCommentCollapse',function(){
+
+    $(this).next().next().next().hide();
+    $(this).attr('class', 'articleCommentExpand');
+})
+
+function displayAllComments(comments,id){
+    $.getJSON("/all-comments/"+id, function(data) {
+
+        $(comments).empty();
+
+        for (let i = 0; i < data.comments.length; i++) {
+
+          if(i%2 == 0){
+            $(comments).prepend("<div class='comment-entry' data-id=" + data._id + ">" + data.comments[i] + "</div>");
+          }else{
+            $(comments).prepend("<div style='background-color: #d6d6d6' class='comment-entry' data-id=" + data._id + ">" + data.comments[i] + "</div>");
+          }
+          
+
+        }
+    });
+}
+
+
+
+
+
