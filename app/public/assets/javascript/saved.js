@@ -70,8 +70,6 @@ $(document).on('click','.deleteComment', function(){
         // On successful call
         success: function(response) {
 
-            // 
-            // console.log(response, commentToDelete);
             displayAllComments(comments,id);
 
         }
@@ -98,7 +96,6 @@ $(document).on('click','.articleCommentCollapse',function(){
 function displayAllComments(comments,id){
     $.getJSON("/all-comments/"+id, function(data) {
 
-        // console.log(data);
         $(comments).empty();
 
         for (let i = 0; i < data.comments.length; i++) {

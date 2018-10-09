@@ -25,13 +25,10 @@ router.get('/',function(req,res){
         }
         // If there are no errors, send the data to page and render it
         else {
-            console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
-            // console.log(found);
             if (found.length == 0){
                 console.log("empty found");
                 res.render('pages/index',found);
             }else{
-                console.log(found);
                 res.render('pages/index',{found:found});
             } 
         }
@@ -42,7 +39,6 @@ router.get('/',function(req,res){
 router.get("/scrape", function(req, res) {
 
     request("https://www.nytimes.com/", function(error, response, html) {
-        // console.log(html);
       // Load the html body from request into cheerio
       let $ = cheerio.load(html);
       let array =[];
@@ -65,8 +61,6 @@ router.get("/scrape", function(req, res) {
                 Saved: false,
                 comments:[]
             });
-            
-            console.log(i+" pushed to array");
         }
       });
       console.log("Scrape Complete");
@@ -96,8 +90,6 @@ router.get('/delete',function(req,res){
         }
         // If there are no errors, send the data to page and render it
         else {
-            console.log("Delete route - Came in here--------------------------------------------------------------------------------------------------------------------------------");
-            console.log(found);
             res.redirect('/');
         }
     }); 
@@ -120,8 +112,6 @@ router.get('/save/:id', function(req,res){
                     }
                     // If there are no errors, send the data to page and render it
                     else {
-                        console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
-                        // console.log(found[0].Saved);
                         if (found[0].Saved == true){
                             res.redirect('/');
                         }else{
@@ -144,13 +134,11 @@ router.get('/saved', function(req,res){
         }
         // If there are no errors, send the data to page and render it
         else {
-            console.log("saved route - Came in here------------------------------------------------------------------------------------------------------------------------------");
-            // console.log(found[0]);
+
             if (found.length == 0){
                 res.render('pages/saved', found);
             }else{
                 res.render('pages/saved', {found: found});
-                // console.log("Document not yet updated");
             } 
         }
     });
@@ -173,8 +161,7 @@ router.get('/remove-save/:id', function(req,res){
                     }
                     // If there are no errors, send the data to page and render it
                     else {
-                        console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
-                        // console.log(found[0].Saved);
+
                         if (found[0].Saved == false){
                             res.redirect('/saved');
                         }else{
@@ -190,13 +177,12 @@ router.get('/remove-save/:id', function(req,res){
 
 //Save a comment added by the user
 router.post('/save-comment/:id', function(req,res){
-    console.log(req.params.id, req.body.comment);
 
     db.news.find({"_id": mongojs.ObjectID(req.params.id)}, function(error,found){
         if (error) {
             console.log(error);
         }else{
-            // console.log(res);
+
             let commentArray = found[0].comments;
             commentArray.push(req.body.comment);
 
@@ -239,7 +225,6 @@ router.get("/all-comments/:id", function(req, res) {
         else {
             // Otherwise, send the note to the browser
             // This will fire off the success function of the ajax request
-            //   console.log(found);
             res.json(found);
         }
       }
@@ -260,11 +245,9 @@ router.get('/delete-comment/:id/:commentid', function(req,res){
               res.send(error);
           }
           else {
-              
-              let newComments = found.comments.splice(req.params.commentid,1);
-              console.log('delete comment-----', newComments, found);
-              db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"comments":found.comments}}, 
-              function(error, found){
+                found.comments.splice(req.params.commentid,1);
+                db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"comments":found.comments}}, 
+                function(error, found){
                 if (error) {
                     console.log(error);
                 }
