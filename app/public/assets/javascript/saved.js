@@ -35,16 +35,43 @@ $(document).on('click','.commentSubmit',function(){
     let id = $(this).attr("data-id");
     let comments = $(this).prev().prev().prev();
 
+    if(text == ""){
+
+    }else{
+        $.ajax({
+            type: "POST",
+            url: "/save-comment/" + $(this).attr("data-id"),
+            data: {
+                comment: text
+            },
+            // On successful call
+            success: function(response) {
+    
+                $(comment).val("");
+                displayAllComments(comments,id);
+    
+            }
+        });
+    }
+    
+})
+
+$(document).on('click','.deleteComment', function(){
+    let commentID = $(this).attr('data-commentid');
+    let id = $(this).attr('data-id');
+    let commentToDelete = $(this).parent();
+    let comments = $(this).parent().parent();
+
+    console.log('delete comment'+ id + commentID);
+
     $.ajax({
-        type: "POST",
-        url: "/save-comment/" + $(this).attr("data-id"),
-        data: {
-            comment: text
-        },
+        type: "GET",
+        url: "/delete-comment/" + id + "/" + commentID,
         // On successful call
         success: function(response) {
 
-            $(comment).val("");
+            // 
+            // console.log(response, commentToDelete);
             displayAllComments(comments,id);
 
         }
@@ -71,17 +98,16 @@ $(document).on('click','.articleCommentCollapse',function(){
 function displayAllComments(comments,id){
     $.getJSON("/all-comments/"+id, function(data) {
 
+        // console.log(data);
         $(comments).empty();
 
         for (let i = 0; i < data.comments.length; i++) {
 
           if(i%2 == 0){
-            $(comments).prepend("<div class='comment-entry' data-id=" + data._id + ">" + data.comments[i] + "</div>");
+            $(comments).prepend("<div class='comment-entry' data-id=" + data._id + ">" + data.comments[i] + "<div class='deleteComment' data-id=" + data._id + " data-commentId=" + i + ">X</div></div>");
           }else{
-            $(comments).prepend("<div style='background-color: #d6d6d6' class='comment-entry' data-id=" + data._id + ">" + data.comments[i] + "</div>");
+            $(comments).prepend("<div style='background-color: #d6d6d6' class='comment-entry' data-id=" + data._id + ">" + data.comments[i] + "<div class='deleteComment' data-id=" + data._id + " data-commentId=" + i + ">X</div></div>");
           }
-          
-
         }
     });
 }

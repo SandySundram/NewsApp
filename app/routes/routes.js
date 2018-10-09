@@ -16,7 +16,7 @@ db.on("error", function(error) {
     console.log("Database Error:", error);
 });
 
-
+//Display the main article page
 router.get('/',function(req,res){
     db.news.find({}, function(error, found) {
         // Throw any errors to the console
@@ -38,7 +38,7 @@ router.get('/',function(req,res){
     }); 
 });
 
-// Scrape data from one site and place it into the mongodb db
+// Scrape data from one site and place it into the mongodb db, then refresh the page
 router.get("/scrape", function(req, res) {
 
     request("https://www.nytimes.com/", function(error, response, html) {
@@ -86,6 +86,7 @@ router.get("/scrape", function(req, res) {
     });
 });
 
+//Delete all articles from the main article page and from the DB
 router.get('/delete',function(req,res){
 
     db.news.drop(function(error, found) {
@@ -102,6 +103,7 @@ router.get('/delete',function(req,res){
     }); 
 });
 
+//Save an article in the DB when a user clicks on the Save button on main article page
 router.get('/save/:id', function(req,res){
     db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"Saved":true}}, 
         function(error, found){
@@ -133,6 +135,7 @@ router.get('/save/:id', function(req,res){
     });
 });
 
+//Display the Saved Articles page
 router.get('/saved', function(req,res){
     
     db.news.find({"Saved":true}, function(error,found){
@@ -153,6 +156,7 @@ router.get('/saved', function(req,res){
     });
 });
 
+//Delete a saved article
 router.get('/remove-save/:id', function(req,res){
     db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"Saved":false, "comments":[]}}, 
         function(error, found){
@@ -184,6 +188,7 @@ router.get('/remove-save/:id', function(req,res){
     });
 });
 
+//Save a comment added by the user
 router.post('/save-comment/:id', function(req,res){
     console.log(req.params.id, req.body.comment);
 
@@ -206,23 +211,6 @@ router.post('/save-comment/:id', function(req,res){
                     console.log("Comment Added");
                     res.redirect('/saved');
 
-                    // db.news.find({"_id": mongojs.ObjectID(req.params.id)}, function(error, found) {
-                    //     // Throw any errors to the console
-                    //     if (error) {
-                    //     console.log(error);
-                    //     }
-                    //     // If there are no errors, send the data to page and render it
-                    //     else {
-                    //         console.log("root route - Came in here------------------------------------------------------------------------------------------------------------------------------");
-                    //         // console.log(found[0].Saved);
-                    //         if (found[0].Saved == false){
-                    //             res.redirect('/saved');
-                    //         }else{
-                    //             console.log("Document not yet updated");
-                    //         } 
-                    //     }
-                    // });
-                    
                 }
 
             });
@@ -231,6 +219,7 @@ router.post('/save-comment/:id', function(req,res){
     })
 })
 
+//Find and return all comments for a particular saved aticle
 router.get("/all-comments/:id", function(req, res) {
     // When searching by an id, the id needs to be passed in
     // as (mongojs.ObjectId(IdYouWantToFind))
@@ -256,5 +245,40 @@ router.get("/all-comments/:id", function(req, res) {
       }
     );
   });
+
+//Delete a particular comment for a specific article, from the DB
+router.get('/delete-comment/:id/:commentid', function(req,res){
+    db.news.findOne(
+        {
+          // Using the id in the url
+          _id: mongojs.ObjectId(req.params.id)
+        },
+        function(error, found) {
+          // log any errors
+          if (error) {
+              console.log(error);
+              res.send(error);
+          }
+          else {
+              
+              let newComments = found.comments.splice(req.params.commentid,1);
+              console.log('delete comment-----', newComments, found);
+              db.news.update({"_id": mongojs.ObjectID(req.params.id)},{$set : {"comments":found.comments}}, 
+              function(error, found){
+                if (error) {
+                    console.log(error);
+                }
+                // If there are no errors, send the data to page and render it
+                else {
+
+                    console.log("Comment deleted");
+                    res.json(found);
+                }
+
+              });
+          }
+        }
+      );
+});
 
 module.exports = router;
